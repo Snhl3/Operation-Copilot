@@ -1,0 +1,6 @@
+dataset,description,source
+equipment.csv,Synthetic equipment master data.,AI4I + synthetic assumptions
+production.csv,Synthetic production events derived from AI4I operating parameters.,AI4I + synthetic assumptions
+maintenance.csv,Synthetic preventive and corrective maintenance events.,AI4I failure/wear signals + synthetic assumptions
+quality.csv,Synthetic quality inspection results.,AI4I operating parameters + synthetic assumptions
+energy.csv,Synthetic energy consumption and specific energy metrics.,AI4I operating parameters + synthetic assumptions

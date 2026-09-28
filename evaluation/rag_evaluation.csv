@@ -1,0 +1,11 @@
+question,expected_document,topic
+"What should I check before starting production?","equipment_operating_sop.md","pre-operation checks"
+"What should I do if an abnormal equipment condition is detected?","equipment_operating_sop.md","abnormal equipment conditions"
+"How should repeated equipment failures be investigated?","maintenance_procedure.md","failure investigation"
+"What information should be recorded after maintenance?","maintenance_procedure.md","maintenance records"
+"How is specific energy consumption calculated?","energy_management_sop.md","specific energy"
+"How should high specific energy consumption be investigated?","energy_management_sop.md","energy investigation"
+"What measurements are used for quality analysis?","quality_control_procedure.md","quality measurements"
+"What should be done when a quality measurement is outside the expected range?","quality_control_procedure.md","quality investigation"
+"Can the AI Copilot replace formal safety procedures?","safety_guidelines.md","AI safety boundary"
+"What should operators do during an abnormal safety condition?","safety_guidelines.md","abnormal safety conditions"

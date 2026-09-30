@@ -43,8 +43,8 @@ def search_documents(
 
 if __name__ == "__main__":
     query = (
-        "What should I check before "
-        "starting production?"
+        "What should I do if an abnormal equipment "
+    "condition is detected?"
     )
 
     model = load_embedding_model()

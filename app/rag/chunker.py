@@ -1,88 +1,163 @@
+import re
+
 from app.rag.loader import load_documents
 
+MAX_CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 150
 
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
 
-
-def split_text(
+def split_large_text(
     text: str,
-    chunk_size: int = CHUNK_SIZE,
+    max_chunk_size: int = MAX_CHUNK_SIZE,
     chunk_overlap: int = CHUNK_OVERLAP,
-):
+) -> list[str]:
     """
-    Split text into overlapping chunks.
-
-    Args:
-        text: Input document text.
-        chunk_size: Maximum approximate number of characters per chunk.
-        chunk_overlap: Number of characters shared between chunks.
-
-    Returns:
-        list[str]: List of text chunks.
+    Split a large section into smaller chunks while preserving
+    paragraph structure as much as possible, applying a character overlap.
     """
-
-    if chunk_size <= 0:
-        raise ValueError("chunk_size must be greater than 0.")
-
-    if chunk_overlap < 0:
-        raise ValueError("chunk_overlap cannot be negative.")
-
-    if chunk_overlap >= chunk_size:
-        raise ValueError(
-            "chunk_overlap must be smaller than chunk_size."
-        )
-
     text = text.strip()
 
     if not text:
         return []
 
+    if len(text) <= max_chunk_size:
+        return [text]
+
     chunks = []
+    paragraphs = re.split(r"\n\s*\n", text)
+    current_chunk = ""
 
-    start = 0
-    text_length = len(text)
+    for paragraph in paragraphs:
+        paragraph = paragraph.strip()
+        if not paragraph:
+            continue
 
-    while start < text_length:
+        # Handle edge case: single paragraph exceeds max_chunk_size
+        if len(paragraph) > max_chunk_size:
+            # First, flush whatever was accumulating
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+                current_chunk = ""
 
-        end = start + chunk_size
+            # Hard-split the oversized paragraph with overlap
+            start = 0
+            para_len = len(paragraph)
+            while start < para_len:
+                end = start + max_chunk_size
+                chunk_str = paragraph[start:end]
 
-        chunk = text[start:end].strip()
+                # Try to break at a space near the end to avoid splitting words
+                if end < para_len:
+                    last_space = chunk_str.rfind(" ")
+                    if last_space > max_chunk_size - chunk_overlap:
+                        end = start + last_space
 
-        if chunk:
-            chunks.append(chunk)
+                chunks.append(paragraph[start:end].strip())
+                start = end - chunk_overlap if end < para_len else para_len
 
-        if end >= text_length:
-            break
+            continue
 
-        start = end - chunk_overlap
+        # Check if adding paragraph exceeds max_chunk_size
+        if not current_chunk:
+            current_chunk = paragraph
+        elif len(current_chunk) + len(paragraph) + 2 <= max_chunk_size:
+            current_chunk += "\n\n" + paragraph
+        else:
+            chunks.append(current_chunk.strip())
+
+            # Create overlap context from the tail of current_chunk
+            overlap_text = current_chunk[-chunk_overlap:].strip() if chunk_overlap > 0 else ""
+            
+            if overlap_text:
+                current_chunk = overlap_text + "\n\n" + paragraph
+            else:
+                current_chunk = paragraph
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
 
     return chunks
 
 
+def split_markdown_sections(
+    text: str,
+    max_chunk_size: int = MAX_CHUNK_SIZE,
+    chunk_overlap: int = CHUNK_OVERLAP,
+) -> list[str]:
+    """
+    Split Markdown content primarily by headings.
+
+    Each Markdown section is kept together when possible.
+    Large sections are further split by paragraph boundaries with overlap.
+    """
+    text = text.strip()
+
+    if not text:
+        return []
+
+    # Match Markdown headings (# Title, ## Section, etc.)
+    heading_pattern = r"(?m)^#{1,6}\s+.+$"
+
+    matches = list(re.finditer(heading_pattern, text))
+
+    if not matches:
+        return split_large_text(
+            text,
+            max_chunk_size=max_chunk_size,
+            chunk_overlap=chunk_overlap,
+        )
+
+    sections = []
+
+    # Preserve content before the first heading
+    if matches[0].start() > 0:
+        preamble = text[: matches[0].start()].strip()
+        if preamble:
+            sections.extend(
+                split_large_text(
+                    preamble,
+                    max_chunk_size=max_chunk_size,
+                    chunk_overlap=chunk_overlap,
+                )
+            )
+
+    for index, match in enumerate(matches):
+        start = match.start()
+        if index + 1 < len(matches):
+            end = matches[index + 1].start()
+        else:
+            end = len(text)
+
+        section = text[start:end].strip()
+
+        if not section:
+            continue
+
+        sections.extend(
+            split_large_text(
+                section,
+                max_chunk_size=max_chunk_size,
+                chunk_overlap=chunk_overlap,
+            )
+        )
+
+    return sections
+
+
 def create_chunks(documents):
     """
-    Create chunks from loaded documents while preserving metadata.
-
-    Args:
-        documents: Documents returned by load_documents().
-
-    Returns:
-        list[dict]: Chunk text with metadata.
+    Create structure-aware chunks from Markdown documents.
     """
-
     chunks = []
 
     for document in documents:
-
-        document_chunks = split_text(
-            document["content"]
+        document_chunks = split_markdown_sections(
+            document["content"],
+            max_chunk_size=MAX_CHUNK_SIZE,
+            chunk_overlap=CHUNK_OVERLAP,
         )
 
-        for chunk_index, chunk_text in enumerate(
-            document_chunks
-        ):
-
+        for chunk_index, chunk_text in enumerate(document_chunks):
             chunk = {
                 "content": chunk_text,
                 "metadata": {
@@ -91,69 +166,23 @@ def create_chunks(documents):
                     "total_chunks": len(document_chunks),
                 },
             }
-
             chunks.append(chunk)
 
     return chunks
 
-def validate_chunks(chunks):
-    """
-    Perform basic validation on generated chunks.
-    """
-
-    if not chunks:
-        raise ValueError("No chunks were generated.")
-
-    for i, chunk in enumerate(chunks):
-
-        content = chunk["content"]
-        metadata = chunk["metadata"]
-
-        if not content.strip():
-            raise ValueError(
-                f"Chunk {i} is empty."
-            )
-
-        if "source" not in metadata:
-            raise ValueError(
-                f"Chunk {i} is missing source metadata."
-            )
-
-        if "chunk_index" not in metadata:
-            raise ValueError(
-                f"Chunk {i} is missing chunk_index."
-            )
-
-    print("Chunk validation: PASS")
-
 
 if __name__ == "__main__":
-
     documents = load_documents()
-
     chunks = create_chunks(documents)
-    validate_chunks(chunks)
-
 
     print(f"Documents loaded: {len(documents)}")
     print(f"Total chunks created: {len(chunks)}")
 
-    for chunk in chunks[:5]:
-
+    for chunk in chunks[:10]:
         print("\n-----------------------------")
-        print(
-            f"Source: {chunk['metadata']['source']}"
-        )
-        print(
-            f"Chunk index: "
-            f"{chunk['metadata']['chunk_index']}"
-        )
-        print(
-            f"Total chunks in document: "
-            f"{chunk['metadata']['total_chunks']}"
-        )
-        print(
-            f"Characters: {len(chunk['content'])}"
-        )
+        print(f"Source: {chunk['metadata']['source']}")
+        print(f"Chunk index: {chunk['metadata']['chunk_index']}")
+        print(f"Total chunks in document: {chunk['metadata']['total_chunks']}")
+        print(f"Characters: {len(chunk['content'])}")
         print("\nContent:")
-        print(chunk["content"][:500])
+        print(chunk["content"])

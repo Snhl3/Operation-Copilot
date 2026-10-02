@@ -1,3 +1,4 @@
+
 import re
 
 from app.rag.loader import load_documents
@@ -12,8 +13,9 @@ def split_large_text(
     chunk_overlap: int = CHUNK_OVERLAP,
 ) -> list[str]:
     """
-    Split a large section into smaller chunks while preserving
-    paragraph structure as much as possible, applying a character overlap.
+    Split a large section into smaller chunks while
+    preserving paragraph structure as much as possible.
+    Apply character overlap when a section is split.
     """
     text = text.strip()
 
@@ -29,45 +31,56 @@ def split_large_text(
 
     for paragraph in paragraphs:
         paragraph = paragraph.strip()
+
         if not paragraph:
             continue
 
-        # Handle edge case: single paragraph exceeds max_chunk_size
+        # Handle a paragraph larger than the chunk limit.
         if len(paragraph) > max_chunk_size:
-            # First, flush whatever was accumulating
             if current_chunk:
                 chunks.append(current_chunk.strip())
                 current_chunk = ""
 
-            # Hard-split the oversized paragraph with overlap
             start = 0
             para_len = len(paragraph)
-            while start < para_len:
-                end = start + max_chunk_size
-                chunk_str = paragraph[start:end]
 
-                # Try to break at a space near the end to avoid splitting words
+            while start < para_len:
+                end = min(start + max_chunk_size, para_len)
+
+                # Try to split at a space near the end.
                 if end < para_len:
+                    chunk_str = paragraph[start:end]
                     last_space = chunk_str.rfind(" ")
+
                     if last_space > max_chunk_size - chunk_overlap:
                         end = start + last_space
 
                 chunks.append(paragraph[start:end].strip())
-                start = end - chunk_overlap if end < para_len else para_len
+
+                if end >= para_len:
+                    break
+
+                start = max(0, end - chunk_overlap)
 
             continue
 
-        # Check if adding paragraph exceeds max_chunk_size
+        # Add paragraph if it fits.
         if not current_chunk:
             current_chunk = paragraph
+
         elif len(current_chunk) + len(paragraph) + 2 <= max_chunk_size:
             current_chunk += "\n\n" + paragraph
+
         else:
             chunks.append(current_chunk.strip())
 
-            # Create overlap context from the tail of current_chunk
-            overlap_text = current_chunk[-chunk_overlap:].strip() if chunk_overlap > 0 else ""
-            
+            # Carry a small amount of context forward.
+            overlap_text = (
+                current_chunk[-chunk_overlap:].strip()
+                if chunk_overlap > 0
+                else ""
+            )
+
             if overlap_text:
                 current_chunk = overlap_text + "\n\n" + paragraph
             else:
@@ -85,21 +98,24 @@ def split_markdown_sections(
     chunk_overlap: int = CHUNK_OVERLAP,
 ) -> list[str]:
     """
-    Split Markdown content primarily by headings.
+    Split Markdown by section headings (## to ######).
 
-    Each Markdown section is kept together when possible.
-    Large sections are further split by paragraph boundaries with overlap.
+    A top-level document title (#) is retained as context
+    and attached to the first meaningful section.
+
+    Large sections are further split by paragraphs.
     """
     text = text.strip()
 
     if not text:
         return []
 
-    # Match Markdown headings (# Title, ## Section, etc.)
-    heading_pattern = r"(?m)^#{1,6}\s+.+$"
-
+    # Split on section headings, not the document title.
+    heading_pattern = r"(?m)^#{2,6}\s+.+$"
     matches = list(re.finditer(heading_pattern, text))
 
+    # If there are no section headings, split the
+    # complete document by paragraph structure.
     if not matches:
         return split_large_text(
             text,
@@ -109,20 +125,13 @@ def split_markdown_sections(
 
     sections = []
 
-    # Preserve content before the first heading
-    if matches[0].start() > 0:
-        preamble = text[: matches[0].start()].strip()
-        if preamble:
-            sections.extend(
-                split_large_text(
-                    preamble,
-                    max_chunk_size=max_chunk_size,
-                    chunk_overlap=chunk_overlap,
-                )
-            )
+    # Content before the first section heading.
+    # This usually contains the document title.
+    preamble = text[:matches[0].start()].strip()
 
     for index, match in enumerate(matches):
         start = match.start()
+
         if index + 1 < len(matches):
             end = matches[index + 1].start()
         else:
@@ -132,6 +141,12 @@ def split_markdown_sections(
 
         if not section:
             continue
+
+        # Attach the title/preamble to the first
+        # meaningful section instead of making
+        # it a standalone retrieval chunk.
+        if index == 0 and preamble:
+            section = preamble + "\n\n" + section
 
         sections.extend(
             split_large_text(
@@ -166,6 +181,7 @@ def create_chunks(documents):
                     "total_chunks": len(document_chunks),
                 },
             }
+
             chunks.append(chunk)
 
     return chunks
@@ -178,11 +194,11 @@ if __name__ == "__main__":
     print(f"Documents loaded: {len(documents)}")
     print(f"Total chunks created: {len(chunks)}")
 
-    for chunk in chunks[:10]:
-        print("\n-----------------------------")
+    for chunk in chunks:
+        print("\n" + "=" * 70)
         print(f"Source: {chunk['metadata']['source']}")
         print(f"Chunk index: {chunk['metadata']['chunk_index']}")
-        print(f"Total chunks in document: {chunk['metadata']['total_chunks']}")
+        print(f"Total chunks: {chunk['metadata']['total_chunks']}")
         print(f"Characters: {len(chunk['content'])}")
         print("\nContent:")
         print(chunk["content"])

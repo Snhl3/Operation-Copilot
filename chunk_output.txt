@@ -1,0 +1,993 @@
+Documents loaded: 5
+Total chunks created: 48
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 0
+Total chunks: 9
+Characters: 439
+
+Content:
+# Energy Management Procedure
+
+## Document Information
+
+- Document ID: SOP-ENG-001
+- Document Type: Energy Management Procedure
+- Version: 1.0
+- Status: Controlled Portfolio Document
+- Applicable Equipment: CNC production equipment
+- Last Reviewed: 2026-09-01
+
+> This document is a synthetic portfolio document created for the
+> Industrial AI Operations Copilot project. It is not an official
+> industrial energy management procedure.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 1
+Total chunks: 9
+Characters: 252
+
+Content:
+## 1. Purpose
+
+This procedure describes the energy measurements available in the
+Industrial AI Operations Copilot demonstration.
+
+The objective is to monitor energy consumption and identify equipment
+conditions associated with higher energy usage.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 2
+Total chunks: 9
+Characters: 229
+
+Content:
+## 2. Energy Measurements
+
+The energy dataset contains:
+
+- Energy ID
+- Timestamp
+- Equipment ID
+- Batch ID
+- Power
+- Operating duration
+- Energy consumption
+- Production quantity
+- Specific energy consumption
+- Energy status
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 3
+Total chunks: 9
+Characters: 263
+
+Content:
+## 3. Energy Consumption
+
+Energy consumption is represented in kilowatt-hours (kWh).
+
+The demonstration dataset calculates energy using electrical power and
+equipment operating duration.
+
+Energy consumption should be analyzed together with production output.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 4
+Total chunks: 9
+Characters: 312
+
+Content:
+## 4. Specific Energy Consumption
+
+Specific energy consumption represents energy consumed per unit of
+production.
+
+It is calculated conceptually as:
+
+Specific Energy = Energy Consumption / Production Quantity
+
+Specific energy is useful for comparing energy efficiency across
+equipment or production periods.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 5
+Total chunks: 9
+Characters: 425
+
+Content:
+## 5. Energy Investigation
+
+When investigating unusually high energy consumption, review:
+
+1. Equipment ID
+2. Power consumption
+3. Operating duration
+4. Production quantity
+5. Specific energy consumption
+6. Production conditions
+7. Equipment maintenance history
+
+A high total energy value does not necessarily indicate poor energy
+performance because total consumption can also increase when production
+volume increases.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 6
+Total chunks: 9
+Characters: 273
+
+Content:
+## 6. Equipment Comparison
+
+Energy performance can be compared across equipment using:
+
+- Total energy consumption
+- Average specific energy consumption
+- Production quantity
+- Operating duration
+
+Comparisons should consider production volume and operating conditions.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 7
+Total chunks: 9
+Characters: 367
+
+Content:
+## 7. Energy Status
+
+Energy records contain an energy status generated from the distribution
+of energy consumption in the demonstration dataset.
+
+The AI Copilot should use the actual stored data when answering
+equipment-specific energy questions.
+
+It should not invent threshold values when the relevant threshold is not
+present in the documentation or database.
+
+---
+
+======================================================================
+Source: energy_management_sop.md
+Chunk index: 8
+Total chunks: 9
+Characters: 327
+
+Content:
+## 8. AI Copilot Usage
+
+Example questions include:
+
+- What is specific energy consumption?
+- How is energy consumption represented?
+- What should be reviewed when energy consumption increases?
+- Why should total energy be considered together with production?
+- Which metrics can be used to compare equipment energy performance?
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 0
+Total chunks: 11
+Characters: 435
+
+Content:
+# Equipment Operating Procedure
+
+## Document Information
+
+- Document ID: SOP-EQP-001
+- Document Type: Equipment Operating Procedure
+- Version: 1.0
+- Status: Controlled Portfolio Document
+- Applicable Equipment: CNC production equipment
+- Last Reviewed: 2026-09-01
+
+> This document is a synthetic portfolio document created for the
+> Industrial AI Operations Copilot project. It is not an official
+> industrial operating procedure.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 1
+Total chunks: 11
+Characters: 298
+
+Content:
+## 1. Purpose
+
+This procedure defines general operating practices for CNC production
+equipment used in the Industrial AI Operations Copilot demonstration.
+
+The objective is to maintain stable production, minimize unnecessary
+downtime, and operate equipment within defined operating conditions.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 2
+Total chunks: 11
+Characters: 264
+
+Content:
+## 2. Equipment Identification
+
+Each production machine has a unique equipment identifier.
+
+Examples:
+
+- CNC-01
+- CNC-02
+- CNC-03
+- CNC-04
+- CNC-05
+
+The equipment identifier must be used when recording production,
+maintenance, quality, and energy information.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 3
+Total chunks: 11
+Characters: 624
+
+Content:
+## 3. Pre-Operation Checks
+
+Before starting production, the operator should verify:
+
+1. Equipment identification is correct.
+2. The machine is available for production.
+3. No active maintenance activity is present.
+4. Required tooling is installed.
+5. Basic operating parameters are within the configured operating range.
+6. Previous unresolved alarms or abnormal conditions are reviewed.
+7. The production batch identifier is correctly configured.
+
+If an abnormal condition is detected, production should not be started
+until the condition has been reviewed according to the applicable
+maintenance or safety procedure.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 4
+Total chunks: 11
+Characters: 368
+
+Content:
+## 4. Operating Parameters
+
+The primary production variables monitored by the system include:
+
+- Air temperature
+- Process temperature
+- Rotational speed
+- Torque
+- Tool wear
+- Operating duration
+- Downtime
+- Production quantity
+
+The Industrial AI Operations Copilot can use these variables to answer
+questions about production performance and equipment behavior.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 5
+Total chunks: 11
+Characters: 416
+
+Content:
+## 5. Operating Conditions
+
+Operators should monitor changes in:
+
+- Rotational speed
+- Torque
+- Process temperature
+- Tool wear
+- Machine failure indicators
+- Production rate
+
+A sudden change in multiple process variables should be investigated
+before assuming that the change represents normal operating behavior.
+
+Historical production records should be reviewed when investigating
+repeated abnormal behavior.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 6
+Total chunks: 11
+Characters: 307
+
+Content:
+## 6. Tool Wear
+
+Tool wear is represented as accumulated tool wear in minutes.
+
+Tool wear should not be interpreted as machine operating duration.
+
+Increasing tool wear can be associated with increasing maintenance
+requirements and should be considered together with production and
+maintenance history.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 7
+Total chunks: 11
+Characters: 387
+
+Content:
+## 7. Production Monitoring
+
+Production performance should be monitored using:
+
+- Production quantity
+- Operating duration
+- Downtime
+- Machine failure events
+- Cycle time
+
+Production quantity alone should not be used to determine overall
+equipment performance.
+
+For example, an equipment unit may have high production but also
+experience significant downtime or energy consumption.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 8
+Total chunks: 11
+Characters: 387
+
+Content:
+## 8. Abnormal Operating Conditions
+
+Examples of conditions requiring investigation include:
+
+- Repeated machine failure events
+- Increasing downtime
+- Unexpected changes in production quantity
+- Increasing tool wear
+- Unusual energy consumption
+- Repeated quality defects
+
+The appropriate historical data and applicable procedure should be
+reviewed before taking corrective action.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 9
+Total chunks: 11
+Characters: 308
+
+Content:
+## 9. Shutdown
+
+Normal shutdown should follow the configured equipment shutdown
+procedure.
+
+Before leaving the equipment:
+
+- Production status should be recorded.
+- Outstanding alarms should be reviewed.
+- Maintenance requirements should be documented.
+- Relevant production information should be saved.
+
+---
+
+======================================================================
+Source: equipment_operating_sop.md
+Chunk index: 10
+Total chunks: 11
+Characters: 435
+
+Content:
+## 10. AI Copilot Usage
+
+The AI Operations Copilot may answer questions such as:
+
+- What are the normal pre-operation checks?
+- What variables should be monitored during production?
+- What does tool wear represent?
+- Which factors should be reviewed when investigating downtime?
+- What information should be checked before starting production?
+
+Answers generated from this document should be grounded in the retrieved
+document content.
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 0
+Total chunks: 11
+Characters: 431
+
+Content:
+# Equipment Maintenance Procedure
+
+## Document Information
+
+- Document ID: SOP-MNT-001
+- Document Type: Maintenance Procedure
+- Version: 1.0
+- Status: Controlled Portfolio Document
+- Applicable Equipment: CNC production equipment
+- Last Reviewed: 2026-09-01
+
+> This document is a synthetic portfolio document created for the
+> Industrial AI Operations Copilot project. It is not an official
+> industrial maintenance procedure.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 1
+Total chunks: 11
+Characters: 324
+
+Content:
+## 1. Purpose
+
+This procedure describes the general maintenance workflow used in the
+Industrial AI Operations Copilot demonstration.
+
+The objective is to identify maintenance requirements, record maintenance
+events, and analyze the relationship between equipment condition,
+failures, downtime, and maintenance activity.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 2
+Total chunks: 11
+Characters: 76
+
+Content:
+## 2. Maintenance Types
+
+Two primary maintenance categories are represented:
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 3
+Total chunks: 11
+Characters: 150
+
+Content:
+### Preventive Maintenance
+
+Preventive maintenance is performed based on equipment condition,
+scheduled intervals, or predefined maintenance criteria.
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 4
+Total chunks: 11
+Characters: 133
+
+Content:
+### Corrective Maintenance
+
+Corrective maintenance is performed following an equipment failure or
+identified abnormal condition.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 5
+Total chunks: 11
+Characters: 347
+
+Content:
+## 3. Maintenance Records
+
+Each maintenance event contains information including:
+
+- Maintenance ID
+- Timestamp
+- Equipment ID
+- Maintenance type
+- Failure mode
+- Severity
+- Tool wear
+- Downtime
+- Technician team
+- Parts replaced
+- Maintenance status
+
+The equipment ID is used to associate maintenance events with the
+corresponding equipment.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 6
+Total chunks: 11
+Characters: 391
+
+Content:
+## 4. Maintenance Investigation
+
+When investigating repeated equipment problems, review:
+
+1. Recent failure events.
+2. Historical failure frequency.
+3. Downtime associated with failures.
+4. Tool wear.
+5. Previous maintenance events.
+6. Maintenance type.
+7. Failure mode.
+8. Parts previously replaced.
+
+Multiple data sources may need to be combined when investigating an
+equipment issue.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 7
+Total chunks: 11
+Characters: 321
+
+Content:
+## 5. Tool Wear and Maintenance
+
+Tool wear is an accumulated condition indicator.
+
+High tool wear may indicate an increased need for maintenance review,
+but tool wear should not be treated as the only factor determining
+maintenance requirements.
+
+Maintenance history and equipment behavior should also be considered.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 8
+Total chunks: 11
+Characters: 300
+
+Content:
+## 6. Failure Investigation
+
+For a machine failure event, review:
+
+- Equipment ID
+- Failure timestamp
+- Failure mode
+- Tool wear
+- Production conditions
+- Downtime
+- Previous maintenance history
+
+A repeated failure mode should be investigated using historical
+maintenance and production records.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 9
+Total chunks: 11
+Characters: 316
+
+Content:
+## 7. Maintenance Completion
+
+After maintenance activity:
+
+1. Maintenance status should be updated.
+2. Parts replaced should be recorded.
+3. Relevant failure information should be documented.
+4. Equipment availability should be confirmed.
+5. Production should resume only after the equipment is cleared for use.
+
+---
+
+======================================================================
+Source: maintenance_procedure.md
+Chunk index: 10
+Total chunks: 11
+Characters: 364
+
+Content:
+## 8. AI Copilot Usage
+
+The AI Operations Copilot may answer questions such as:
+
+- What information is stored for maintenance events?
+- What is the difference between preventive and corrective maintenance?
+- What should be reviewed when investigating repeated failures?
+- How should tool wear be interpreted?
+- What information should be checked after maintenance?
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 0
+Total chunks: 9
+Characters: 424
+
+Content:
+# Quality Control Procedure
+
+## Document Information
+
+- Document ID: SOP-QC-001
+- Document Type: Quality Control Procedure
+- Version: 1.0
+- Status: Controlled Portfolio Document
+- Applicable Equipment: CNC production equipment
+- Last Reviewed: 2026-09-01
+
+> This document is a synthetic portfolio document created for the
+> Industrial AI Operations Copilot project. It is not an official
+> industrial quality procedure.
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 1
+Total chunks: 9
+Characters: 259
+
+Content:
+## 1. Purpose
+
+This procedure describes the quality measurements represented in the
+Industrial AI Operations Copilot demonstration.
+
+The objective is to monitor product quality and identify relationships
+between production conditions and quality results.
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 2
+Total chunks: 9
+Characters: 204
+
+Content:
+## 2. Quality Measurements
+
+The quality dataset contains:
+
+- Inspection ID
+- Timestamp
+- Equipment ID
+- Batch ID
+- Product ID
+- Defect score
+- Dimension error
+- Surface quality index
+- Quality status
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 3
+Total chunks: 9
+Characters: 288
+
+Content:
+## 3. Defect Score
+
+Defect score represents a numerical indicator of observed product
+defects.
+
+Higher defect scores indicate a greater observed defect level within
+the synthetic demonstration dataset.
+
+The defect score should be interpreted together with other quality
+measurements.
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 4
+Total chunks: 9
+Characters: 249
+
+Content:
+## 4. Dimension Error
+
+Dimension error represents the measured deviation from the expected
+product dimension.
+
+The value is represented in millimeters.
+
+Historical dimension error can be analyzed by:
+
+- Equipment
+- Product
+- Batch
+- Time period
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 5
+Total chunks: 9
+Characters: 199
+
+Content:
+## 5. Surface Quality
+
+Surface quality index is a numerical indicator used to represent the
+observed surface quality of a product.
+
+It can be analyzed alongside defect score and dimension error.
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 6
+Total chunks: 9
+Characters: 327
+
+Content:
+## 6. Quality Investigation
+
+When investigating an increase in defects, review:
+
+1. Equipment ID
+2. Product ID
+3. Batch ID
+4. Production conditions
+5. Defect score
+6. Dimension error
+7. Surface quality
+8. Recent maintenance events
+
+Combining production, quality, and maintenance information may provide
+additional context.
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 7
+Total chunks: 9
+Characters: 284
+
+Content:
+## 7. Quality Status
+
+Each inspection has a quality status.
+
+The status should be interpreted according to the configured quality
+rules for the demonstration dataset.
+
+The AI Copilot should not invent quality acceptance limits that are not
+present in the available documentation.
+
+---
+
+======================================================================
+Source: quality_control_procedure.md
+Chunk index: 8
+Total chunks: 9
+Characters: 293
+
+Content:
+## 8. AI Copilot Usage
+
+Example questions include:
+
+- What quality measurements are available?
+- What does defect score represent?
+- What does dimension error represent?
+- What information should be reviewed when defects increase?
+- Which datasets can be combined during quality investigation?
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 0
+Total chunks: 8
+Characters: 418
+
+Content:
+# Equipment Safety Guidelines
+
+## Document Information
+
+- Document ID: SOP-SAF-001
+- Document Type: Safety Guidelines
+- Version: 1.0
+- Status: Controlled Portfolio Document
+- Applicable Equipment: CNC production equipment
+- Last Reviewed: 2026-09-01
+
+> This document is a synthetic portfolio document created for the
+> Industrial AI Operations Copilot project. It is not an official
+> industrial safety procedure.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 1
+Total chunks: 8
+Characters: 354
+
+Content:
+## 1. Purpose
+
+These guidelines define general safety principles for the demonstration
+environment.
+
+They are intended to demonstrate how safety-related operational
+information can be retrieved using the AI Operations Copilot.
+
+They must not be used as a substitute for site-specific safety
+procedures, training, permits, or regulatory requirements.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 2
+Total chunks: 8
+Characters: 363
+
+Content:
+## 2. General Safety Principles
+
+Personnel should:
+
+- Follow applicable site safety procedures.
+- Use required personal protective equipment.
+- Follow equipment-specific operating instructions.
+- Report abnormal conditions.
+- Do not bypass safety systems.
+- Follow authorized maintenance procedures.
+- Escalate unsafe conditions to the responsible personnel.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 3
+Total chunks: 8
+Characters: 348
+
+Content:
+## 3. Before Equipment Operation
+
+Before operating equipment:
+
+1. Verify that the equipment is authorized for operation.
+2. Check for visible abnormal conditions.
+3. Confirm that required safeguards are available.
+4. Verify that the appropriate operating procedure is being followed.
+5. Confirm that maintenance activities are not in progress.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 4
+Total chunks: 8
+Characters: 359
+
+Content:
+## 4. Abnormal Conditions
+
+Examples of abnormal conditions include:
+
+- Unexpected equipment movement
+- Unusual noise
+- Unexpected temperature behavior
+- Unexpected process behavior
+- Repeated alarms
+- Visible equipment damage
+- Unexpected production behavior
+
+Abnormal conditions should be reported and investigated according to
+site-specific procedures.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 5
+Total chunks: 8
+Characters: 283
+
+Content:
+## 5. Maintenance Safety
+
+Maintenance activities should only be performed by authorized personnel
+following the applicable site safety procedure.
+
+The AI Operations Copilot must not replace formal safety authorization,
+lockout/tagout procedures, permits, or qualified personnel.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 6
+Total chunks: 8
+Characters: 313
+
+Content:
+## 6. AI Copilot Safety Boundary
+
+The AI Copilot may retrieve and summarize information from this document.
+
+For safety-critical questions, the system should clearly communicate
+that retrieved information is informational and that applicable
+site-specific procedures and authorized personnel take precedence.
+
+---
+
+======================================================================
+Source: safety_guidelines.md
+Chunk index: 7
+Total chunks: 8
+Characters: 378
+
+Content:
+## 7. Example Questions
+
+The AI Copilot may answer:
+
+- What are the general safety principles?
+- What should be checked before equipment operation?
+- What are examples of abnormal conditions?
+- Can the AI Copilot replace site safety procedures?
+
+For the last question, the answer should state that the AI Copilot does
+not replace formal safety procedures or qualified personnel.
